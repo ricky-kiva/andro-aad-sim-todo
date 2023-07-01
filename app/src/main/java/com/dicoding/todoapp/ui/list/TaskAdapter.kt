@@ -29,22 +29,23 @@ class TaskAdapter(
         val task = getItem(position) as Task
         // XTODO 9 : Bind data to ViewHolder (You can run app to check)
         holder.bind(task)
+        val titleTextView = holder.itemView.findViewById<TaskTitleView>(R.id.item_tv_title)
         when {
             // XTODO 10 : Display title based on status using TitleTextView
             task.isCompleted -> {
                 //DONE
                 holder.cbComplete.isChecked = true
-                holder.tvTitle.text = "DONE"
+                titleTextView.state = TaskTitleView.DONE
             }
             task.dueDateMillis < System.currentTimeMillis() -> {
                 //OVERDUE
                 holder.cbComplete.isChecked = false
-                holder.tvTitle.text = "OVERDUE"
+                titleTextView.state = TaskTitleView.OVERDUE
             }
             else -> {
                 //NORMAL
                 holder.cbComplete.isChecked = false
-                holder.tvTitle.text = "NORMAL"
+                titleTextView.state = TaskTitleView.OVERDUE
             }
         }
     }
