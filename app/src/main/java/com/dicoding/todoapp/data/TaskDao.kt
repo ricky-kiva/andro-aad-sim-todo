@@ -5,7 +5,7 @@ import androidx.paging.DataSource
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
 
-// DONE TODO 2 : Define data access object (DAO)
+// XTODO 2 : Define data access object (DAO)
 @Dao
 interface TaskDao {
 
@@ -30,7 +30,7 @@ interface TaskDao {
     @Query("UPDATE tasks SET isCompleted = :completed WHERE id = :taskId")
     suspend fun updateCompleted(taskId: Int, completed: Boolean)
 
-    @Query("SELECT * FROM tasks")
-    fun getFilteredTasks(filterQuery: SupportSQLiteQuery): DataSource.Factory<Int, Task>
+//    @Query("SELECT * FROM tasks")
+//    fun getFilteredTasks(filterQuery: SupportSQLiteQuery): DataSource.Factory<Int, Task>
     
 }

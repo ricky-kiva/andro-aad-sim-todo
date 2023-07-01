@@ -1,6 +1,7 @@
 package com.dicoding.todoapp.ui.list
 
 import android.content.Intent
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -18,27 +19,32 @@ class TaskAdapter(
     private val onCheckedChange: (Task, Boolean) -> Unit
 ) : PagedListAdapter<Task, TaskAdapter.TaskViewHolder>(DIFF_CALLBACK) {
 
-    //TODO 8 : Create and initialize ViewHolder
+    // XTODO 8 : Create and initialize ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        throw NotImplementedError("Not yet implemented")
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.task_item, parent, false)
+        return TaskViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = getItem(position) as Task
-        //TODO 9 : Bind data to ViewHolder (You can run app to check)
+        // XTODO 9 : Bind data to ViewHolder (You can run app to check)
+        holder.bind(task)
         when {
-            //TODO 10 : Display title based on status using TitleTextView
+            // XTODO 10 : Display title based on status using TitleTextView
             task.isCompleted -> {
                 //DONE
                 holder.cbComplete.isChecked = true
+                holder.tvTitle.text = "DONE"
             }
             task.dueDateMillis < System.currentTimeMillis() -> {
                 //OVERDUE
                 holder.cbComplete.isChecked = false
+                holder.tvTitle.text = "OVERDUE"
             }
             else -> {
                 //NORMAL
                 holder.cbComplete.isChecked = false
+                holder.tvTitle.text = "NORMAL"
             }
         }
     }

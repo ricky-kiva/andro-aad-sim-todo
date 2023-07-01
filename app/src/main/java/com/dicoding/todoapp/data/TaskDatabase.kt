@@ -5,6 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.dicoding.todoapp.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -12,7 +16,7 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
-// DONE TODO 3 : Define room database class and prepopulate database using JSON
+// XTODO 3 : Define room database class and prepopulate database using JSON
 @Database(entities = [Task::class], version = 1)
 abstract class TaskDatabase : RoomDatabase() {
 
@@ -40,17 +44,19 @@ abstract class TaskDatabase : RoomDatabase() {
             val task = loadJsonArray(context)
             try {
                 if (task != null) {
-                    for (i in 0 until task.length()) {
-                        val item = task.getJSONObject(i)
-                        dao.insertAll(
-                            Task(
-                                item.getInt("id"),
-                                item.getString("title"),
-                                item.getString("description"),
-                                item.getLong("dueDate"),
-                                item.getBoolean("completed")
+                    CoroutineScope(Dispatchers.IO).launch {
+                        for (i in 0 until task.length()) {
+                            val item = task.getJSONObject(i)
+                            dao.insertAll(
+                                Task(
+                                    item.getInt("id"),
+                                    item.getString("title"),
+                                    item.getString("description"),
+                                    item.getLong("dueDate"),
+                                    item.getBoolean("completed")
+                                )
                             )
-                        )
+                        }
                     }
                 }
             } catch (exception: JSONException) {
