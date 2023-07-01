@@ -45,7 +45,7 @@ class TaskAdapter(
             else -> {
                 //NORMAL
                 holder.cbComplete.isChecked = false
-                titleTextView.state = TaskTitleView.OVERDUE
+                titleTextView.state = TaskTitleView.NORMAL
             }
         }
     }
